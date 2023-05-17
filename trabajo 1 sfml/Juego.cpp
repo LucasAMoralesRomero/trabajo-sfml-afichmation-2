@@ -15,6 +15,10 @@ juego::juego(int ancho, int alto, std::string titulo)
 	tiempo1 = new Time();
 	tiempoInicio = reloj1->getElapsedTime().asSeconds() + TIEMPO_JUEGO;
 	gameOver = false;
+	for (int i = 0; i < 10; i++) {
+		bloquesGolpeados[i] = 0;
+	}
+
 
 
 	//sprite y textura de fondo
@@ -38,7 +42,14 @@ juego::juego(int ancho, int alto, std::string titulo)
 	stringGameOverText->setFont(*font);
 	stringGameOverText->setString("Time's up, GAME OVER!");
 	stringGameOverText->setFillColor(sf::Color::Red);
-	stringGameOverText->setPosition((float)(ventana1->getSize().x / 2), (float)(ventana1->getSize().y / 2));
+	stringGameOverText->setPosition((float)(ventana1->getSize().x / 3), (float)(ventana1->getSize().y / 2));
+
+	stringGameWinText = new Text();
+	stringGameWinText->setFont(*font);
+	stringGameWinText->setString("Ganaste!");
+	stringGameWinText->setFillColor(sf::Color::Green);
+	stringGameWinText->setPosition((float)(ventana1->getSize().x / 3), (float)(ventana1->getSize().y / 2));
+
 	//////////////
 
 	//sprite y textura de mario
@@ -54,9 +65,9 @@ juego::juego(int ancho, int alto, std::string titulo)
 	//reproduzco la animacion idle
 	spriteMario->Play("idle");
 	//seteo la escala del sprite con setScale
-	spriteMario->setScale(Vector2f(1.f, 1.f));
+	spriteMario->setScale(Vector2f(0.5f, 0.5f));
 	//ubicamos al personaje
-	spriteMario->move(500, 1);
+	spriteMario->move(500, 300);
 
 
 	//generar los numeros random
@@ -88,7 +99,7 @@ juego::juego(int ancho, int alto, std::string titulo)
 	for (int i = 0; i <= 9; i++)
 	{
 		arrayBloques[i] = new bloque(arrayNumerosBloques[i]);
-		arrayBloques[i]->setPosition((50 * i), 200);
+		arrayBloques[i]->setPosition((65 * i), 200);
 	}
 
 	evento1 = new Event;
@@ -99,7 +110,7 @@ void juego::gameLoop() {
 
 	while (ventana1->isOpen()){  
 		*tiempo1 = reloj1->getElapsedTime();
-		if (tiempo1->asSeconds() > 1 / fps && !gameOver)
+		if (tiempo1->asSeconds() > 1 / fps && !gameOver && !win)
 		{
 			procesarColisiones();
 			procesarEventos();
@@ -107,11 +118,48 @@ void juego::gameLoop() {
 			spriteMario->Update();
 			dibujar();
 			procesarTiempo();
+			checkWin();
 		}
 		if (gameOver) {
 			//ventana1->clear();
+			ventana1->clear();
+			for (int i = 0; i <= 9; i++)
+			{
+				arrayBloques[i]->setText(arrayOrdenado[i]);
+			}
+			ventana1->draw(*spriteBackground);
+			ventana1->draw(*spriteMario);
+			//ventana1->draw(arrayBloques[3]->getSprite());
+			for (int i = 0; i <= 9; i++)
+			{
+				ventana1->draw(arrayBloques[i]->getSprite());
+				ventana1->draw(arrayBloques[i]->getText());
+			}
 
-			ventana1->draw(*stringGameOverText);
+			ventana1->draw(*stringTimerText);
+			if (!win) {
+				ventana1->draw(*stringGameOverText);
+				ventana1->display();
+			}
+			
+		}
+		if (win) {
+			ventana1->clear();
+			ventana1->draw(*spriteBackground);
+			ventana1->draw(*spriteMario);
+			for (int i = 0; i <= 9; i++)
+			{
+				arrayBloques[i]->setText(arrayOrdenado[i]);
+			}
+			//ventana1->draw(arrayBloques[3]->getSprite());
+			for (int i = 0; i <= 9; i++)
+			{
+				ventana1->draw(arrayBloques[i]->getSprite());
+				ventana1->draw(arrayBloques[i]->getText());
+			}
+
+			ventana1->draw(*stringTimerText);
+			ventana1->draw(*stringGameWinText);
 			ventana1->display();
 		}
 	}
@@ -228,21 +276,27 @@ void juego::procesarGravedad() {//aca procesamos la gravedad para mario
 void juego::procesarColisiones() {//aca vamos a procesar la colision de mario con las cajas
 	for (int i = 0; i < 10; i++) {
 
-		if (spriteMario->getGlobalBounds().intersects(arrayBloques[i]->getPosition()) && arrayBloques[i]->getGolpeado = false)
+		if (spriteMario->getGlobalBounds().intersects(arrayBloques[i]->getPosition()) && arrayBloques[i]->getGolpeado() == false)
 		{
-			if (arrayBloques[i]->getText()==(to_string)(arrayOrdenado[numeroBloque])) {
+			if ((arrayBloques[i]->getTextString()) == (to_string)(arrayOrdenado[numeroBloque])) {
 				arrayBloques[i]->setColorGreen();
+				arrayBloques[i]->setGolpeado();
+				numeroBloque = numeroBloque + 1;
+				bloquesGolpeados[i] = 1;
 			}
-			
+			else {
+				arrayBloques[i]->setColorRed();
+				arrayBloques[i]->setGolpeado();
+				tiempoInicio = tiempoInicio - 10.f;
+				numeroBloque = numeroBloque + 1;
+			}
 
-				
-			}
-			
-			
-			
-			
+
+
+
 		}
 	}
+}
 
 
 void juego::procesarTiempo()
@@ -250,7 +304,7 @@ void juego::procesarTiempo()
 	tiempoFin = reloj1->getElapsedTime().asSeconds();
 	int seconds = ((int)(tiempoInicio - tiempoFin));
 	stringTimerText->setString("Tiempo: " + (std::to_string(seconds)));
-	if (seconds == -1 || seconds < -1)//si el tiempo es cero es game over (si le digo == a cero el reloj se detiene en 1)
+	if (seconds == -1 || seconds < -2)//si el tiempo es cero es game over (si le digo == a cero el reloj se detiene en 1)
 	{
 		gameOver = true;
 	}
@@ -267,5 +321,11 @@ void juego::bubbleSort(int arr[], int size) {
 				arr[j + 1] = temp;
 			}
 		}
+	}
+}
+
+void juego::checkWin() {
+	if (bloquesGolpeados[0]==1 && bloquesGolpeados[1] == 1 && bloquesGolpeados[2] == 1 && bloquesGolpeados[3] == 1 && bloquesGolpeados[4] == 1 && bloquesGolpeados[5] == 1 && bloquesGolpeados[6] == 1 && bloquesGolpeados[7] == 1 && bloquesGolpeados[8] == 1 && bloquesGolpeados[9] == 1) {
+		win = true;
 	}
 }

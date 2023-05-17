@@ -18,6 +18,7 @@ public:
 	void procesarColisiones();//procesamos las colisiones con las cajas
 	void procesarTiempo();//procesamos el tiempo
 	void bubbleSort(int arr[], int size);//algoritmo bubble sort
+	void checkWin();//chequeamos si ganamos
 
 private:
 
@@ -43,6 +44,8 @@ private:
 	int floor = 380;
 	const float gravity = 0.5f;
 	int numeroBloque = 0;
+	int bloquesGolpeados[10];
+	bool win = false;//bandera de ganada
 
 	//variables de juego(clock)
 	Clock * reloj1;
@@ -59,6 +62,7 @@ private:
 	Text * stringTimerText;
 	String stringGameOver;
 	Text * stringGameOverText;
+	Text * stringGameWinText;
 
 	//bloques
 
