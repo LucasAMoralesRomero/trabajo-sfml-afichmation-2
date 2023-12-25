@@ -41,7 +41,7 @@ private:
 	
 
 	//variables de juego (mundo)
-	int floor = 380;
+	int floor = 400;
 	const float gravity = 0.5f;
 	int numeroBloque = 0;
 	int bloquesGolpeados[10];

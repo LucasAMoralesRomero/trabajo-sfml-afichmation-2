@@ -67,7 +67,7 @@ juego::juego(int ancho, int alto, std::string titulo)
 	//seteo la escala del sprite con setScale
 	spriteMario->setScale(Vector2f(0.5f, 0.5f));
 	//ubicamos al personaje
-	spriteMario->move(500, 300);
+	spriteMario->move(500, 400);
 
 
 	//generar los numeros random
@@ -235,7 +235,7 @@ void juego::procesarEventos() {
 				if (en_piso)
 				{
 					spriteMario->Play("jump");
-					spriteMario->setPosition(spriteMario->getPosition().x, spriteMario->getPosition().y - 80);
+					spriteMario->setPosition(spriteMario->getPosition().x, spriteMario->getPosition().y - 90);
 					jumpVelocity += gravity;
 					jumpVelocity = -10.f; // reiniciar la velocidad de salto
 					en_piso = false;//desactivamos bandera del piso
@@ -243,7 +243,7 @@ void juego::procesarEventos() {
 				}
 			}
 				break;
-		default://en default, ajustamos la acelñeracion y seteamos si se reproduce la animacion de idle
+		default://en default, ajustamos la aceleracion y seteamos si se reproduce la animacion de idle
 			if (activar_idle)
 			{
 				spriteMario->Play("idle");
@@ -256,7 +256,7 @@ void juego::procesarEventos() {
 }
 
 void juego::procesarGravedad() {//aca procesamos la gravedad para mario
-	spriteMario->move(0.f, jumpVelocity);//apricamos la gravedad y la velocidad de salto
+	spriteMario->move(0.f, jumpVelocity);//aplicamos la gravedad y la velocidad de salto
 	jumpVelocity += 0.5f;//ajustamos el valor de gravedad para controlar la altura de salto
 	if (!en_piso)
 	{
