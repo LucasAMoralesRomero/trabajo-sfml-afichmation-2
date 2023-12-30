@@ -119,12 +119,14 @@
   <ItemGroup>
     <ClInclude Include="..\Afichmation.h" />
     <ClInclude Include="..\Animation.h" />
+    <ClInclude Include="audioEngine.h" />
     <ClInclude Include="bloque.h" />
     <ClInclude Include="Juego.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Afichmation.cpp" />
     <ClCompile Include="..\main.cpp" />
+    <ClCompile Include="audioEngine.cpp" />
     <ClCompile Include="bloque.cpp" />
     <ClCompile Include="Juego.cpp" />
   </ItemGroup>
