@@ -1,5 +1,6 @@
 #include "juego.h"
 #include "bloque.h"
+#include "audioEngine.h"
 #include <stdlib.h>
 
 juego::juego(int ancho, int alto, std::string titulo)
@@ -9,6 +10,9 @@ juego::juego(int ancho, int alto, std::string titulo)
 	ventana1 = new RenderWindow(VideoMode(ancho, alto), titulo);
 
 	ventana1->setFramerateLimit(fps);
+
+	//generamos el audioEngine
+	audio = new audioEngine;
 
 	//inicializamos el rejor
 	reloj1 = new Clock();

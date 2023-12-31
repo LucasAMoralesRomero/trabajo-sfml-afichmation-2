@@ -2,6 +2,7 @@
 #include "SFML\Graphics.hpp"
 #include "Afichmation.h"
 #include "bloque.h"
+#include "audioEngine.h"
 #include <iostream>
 
 using namespace sf;
@@ -46,6 +47,7 @@ private:
 	int numeroBloque = 0;
 	int bloquesGolpeados[10];
 	bool win = false;//bandera de ganada
+	audioEngine * audio;//desde esta variable accedemos a los sonidos
 
 	//variables de juego(clock)
 	Clock * reloj1;
