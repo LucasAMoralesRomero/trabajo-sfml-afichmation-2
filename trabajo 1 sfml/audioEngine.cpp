@@ -45,3 +45,8 @@ void audioEngine::playMusicdGameOver()
 {
 	gameOverMusic.play();//reproducimos el sonido de perder
 }
+
+void audioEngine::playMusicHurryUp()
+{
+	hurryUpMusic.play();//reproducimos el sonido de apurarse
+}
