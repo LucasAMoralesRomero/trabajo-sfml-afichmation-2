@@ -1,4 +1,5 @@
 #include "SFML\Graphics.hpp"
+#include "SFML\Audio.hpp"
 #include "trabajo 1 sfml/Juego.h"
 
 using namespace sf;

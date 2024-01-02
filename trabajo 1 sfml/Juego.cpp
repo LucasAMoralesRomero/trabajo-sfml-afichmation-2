@@ -12,8 +12,8 @@ juego::juego(int ancho, int alto, std::string titulo)
 	ventana1->setFramerateLimit(fps);
 
 	//generamos el audioEngine
-	audio = new audioEngine;
-
+	audio = new audioEngine();
+	
 	//inicializamos el rejor
 	reloj1 = new Clock();
 	tiempo1 = new Time();
@@ -33,6 +33,8 @@ juego::juego(int ancho, int alto, std::string titulo)
 	spriteBackground->setTexture(*background);
 	//ajustamos al tamaño de ventana
 	spriteBackground->setScale((float)(ventana1->getSize().x) / background->getSize().x, (float)(ventana1->getSize().y) / background->getSize().y); //escalamos el fondo
+	//empezamos a reproducir el audio
+	audio->playBackgroundSound();
 
 
 	//ajustes de HUD

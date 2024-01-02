@@ -3,12 +3,12 @@
 audioEngine::audioEngine()
 {
 	//cargamos el sonido ambiente en el buffer
-	bufferSound.loadFromFile("assets\gameMusic.ogg");
+	bufferSound.loadFromFile("gameMusic.ogg");
 	//cargamos en Music todos los sonidos FX
-	errorMusic.openFromFile("assets\ohNo.ogg");
-	winMusic.openFromFile("assets\gameWin.ogg");
-	gameOverMusic.openFromFile("assets\gameOver.ogg");
-	hurryUpMusic.openFromFile("assets\hurryUp.ogg");
+	errorMusic.openFromFile("ohNo.ogg");
+	winMusic.openFromFile("gameWin.ogg");
+	gameOverMusic.openFromFile("gameOver.ogg");
+	hurryUpMusic.openFromFile("hurryUp.ogg");
 	//definimos que el sonido ambiente puede loopear
 	worldSound.setLoop(true);
 }
