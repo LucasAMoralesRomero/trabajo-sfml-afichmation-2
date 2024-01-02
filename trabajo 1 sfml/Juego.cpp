@@ -295,6 +295,8 @@ void juego::procesarColisiones() {//aca vamos a procesar la colision de mario co
 				arrayBloques[i]->setGolpeado();
 				tiempoInicio = tiempoInicio - 10.f;
 				numeroBloque = numeroBloque + 1;
+				//reproducimos audio de errar
+				audio->playMusicError();
 			}
 
 

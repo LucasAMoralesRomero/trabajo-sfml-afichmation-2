@@ -18,11 +18,14 @@ public:
 	void playMusicdGameOver();//reproduce un sonido si perdemos
 	void playMusicHurryUp();//reproduce el sonido de apurarse
 private:
-	SoundBuffer bufferSound; //buffer del sonido ambiente
-	Sound worldSound;//sonido de ambiente
-	Music errorMusic;//carga el sonido de errar el bloque
-	Music winMusic;//carga el sonido de ganar
-	Music gameOverMusic;//carga el sonido de perder (Game Over)
-	Music hurryUpMusic;//carga el sonido de apurarse
+	SoundBuffer errorBuffer; //buffer del sonido errar bloque
+	SoundBuffer winBuffer;//buffer del sonido de ganar
+	SoundBuffer gameOverBuffer;//buffer del sonido de perder
+	SoundBuffer hurryUpBuffer;//buffer de sonido de apurarse
+	Music worldSound;//sonido de ambiente
+	Sound errorMusic;//carga el sonido de errar el bloque
+	Sound winMusic;//carga el sonido de ganar
+	Sound gameOverMusic;//carga el sonido de perder (Game Over)
+	Sound hurryUpMusic;//carga el sonido de apurarse
 
 };
