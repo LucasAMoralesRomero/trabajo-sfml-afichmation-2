@@ -114,9 +114,9 @@ juego::juego(int ancho, int alto, std::string titulo)
 
 void juego::gameLoop() {
 
-	while (ventana1->isOpen()) {
+	while (ventana1->isOpen() && !gameOver && !win || gameOver && win) {
 		*tiempo1 = reloj1->getElapsedTime();
-		if (tiempo1->asSeconds() > 1 / fps && !gameOver && !win)
+		if (tiempo1->asSeconds() > 1 / fps)
 		{
 			procesarColisiones();
 			procesarEventos();
@@ -143,8 +143,23 @@ void juego::gameLoop() {
 
 			ventana1->draw(*stringTimerText);
 			if (!win) {
+				ventana1->clear();
+				ventana1->draw(*spriteBackground);
+				ventana1->draw(*spriteMario);
+				for (int i = 0; i <= 9; i++)
+				{
+					arrayBloques[i]->setText(arrayOrdenado[i]);
+				}
+				//ventana1->draw(arrayBloques[3]->getSprite());
+				for (int i = 0; i <= 9; i++)
+				{
+					ventana1->draw(arrayBloques[i]->getSprite());
+					ventana1->draw(arrayBloques[i]->getText());
+				}
+				ventana1->draw(*stringTimerText);
 				ventana1->draw(*stringGameOverText);
 				ventana1->display();
+				sleep(seconds(2.0));//esperamos 2 segundos mientras se reproduce el sonido
 			}
 		}
 
@@ -175,7 +190,7 @@ void juego::gameLoop() {
 				procesarGravedad();
 				spriteMario->Update();
 				ventana1->draw(*spriteMario);
-
+				sleep(seconds(3.0));//esperamos 3 segundos mienras se reproduce el sonido
 			}
 		
 	}
@@ -324,12 +339,13 @@ void juego::procesarTiempo()
 	stringTimerText->setString("Tiempo: " + (std::to_string(seconds)));
 	if (seconds == -1 || seconds < -2)//si el tiempo es cero es game over (si le digo == a cero el reloj se detiene en 1)
 	{
+		gameOver = true;
 		//reproducioms el sonido de perder
 		//primero detenemos el sonido de ambiente
 		audio->stopBackgroundSound();
 		//ahora reporducioms el sonido de perder
 		audio->playMusicdGameOver();
-		gameOver = true;
+		
 	}
 	//cout << seconds << endl;
 
