@@ -22,7 +22,7 @@ juego::juego(int ancho, int alto, std::string titulo)
 	for (int i = 0; i < 10; i++) {
 		bloquesGolpeados[i] = 0;
 	}
-
+	hurryUp = false;//asignamos la bandera de hurry up en false, recien inicio el juego
 
 
 	//sprite y textura de fondo
@@ -33,8 +33,7 @@ juego::juego(int ancho, int alto, std::string titulo)
 	spriteBackground->setTexture(*background);
 	//ajustamos al tamaño de ventana
 	spriteBackground->setScale((float)(ventana1->getSize().x) / background->getSize().x, (float)(ventana1->getSize().y) / background->getSize().y); //escalamos el fondo
-	//empezamos a reproducir el audio
-	audio->playBackgroundSound();
+
 
 
 	//ajustes de HUD
@@ -112,7 +111,18 @@ juego::juego(int ancho, int alto, std::string titulo)
 	gameLoop();
 }
 
+
 void juego::gameLoop() {
+	//empezamos a reproducir el audio
+	if (!hurryUp) //reproducioms el sonido en velocidad normal
+	{
+		audio->playBackgroundSound();
+	}
+	if (hurryUp)
+	{
+		audio->playBackgroundSoundFaster();
+	}
+
 
 	while (ventana1->isOpen() && !gameOver && !win || gameOver && win) {
 		*tiempo1 = reloj1->getElapsedTime();
@@ -348,7 +358,13 @@ void juego::procesarTiempo()
 		
 	}
 	//cout << seconds << endl;
+	if (seconds == 30)//si llegamos a los 30 segundos reproducimos el hurry up y cambiamos la bandera de hurryUP
+	{
+		audio->stopBackgroundSound();
+		audio->playMusicHurryUp();
+		hurryUp = true;
 
+	}
 }
 
 void juego::bubbleSort(int arr[], int size) {

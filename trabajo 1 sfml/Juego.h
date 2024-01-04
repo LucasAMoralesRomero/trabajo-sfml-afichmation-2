@@ -56,6 +56,7 @@ private:
 	float tiempoFin;
 	int TIEMPO_JUEGO;//en segundos
 	bool gameOver;//bandera de fin de juego (fin de tiempo)
+	bool hurryUp;//bool para reproducir el sonido mas rapido
 
 	//variable de HUD
 
