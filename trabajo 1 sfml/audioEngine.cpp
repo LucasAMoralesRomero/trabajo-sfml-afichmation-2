@@ -55,3 +55,15 @@ void audioEngine::playMusicHurryUp()
 {
 	hurryUpMusic.play();//reproducimos el sonido de apurarse
 }
+
+bool audioEngine::backgroundSoundStatus()
+{
+	if (worldSound.getStatus() == sf::Sound::Playing)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}

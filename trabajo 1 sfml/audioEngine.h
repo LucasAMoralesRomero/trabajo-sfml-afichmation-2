@@ -17,6 +17,7 @@ public:
 	void playMusicWin();//reproduce sonido si ganamos
 	void playMusicdGameOver();//reproduce un sonido si perdemos
 	void playMusicHurryUp();//reproduce el sonido de apurarse
+	bool backgroundSoundStatus();//retorna el status de la reproduccion true reproduciendo false pausado
 private:
 	SoundBuffer errorBuffer; //buffer del sonido errar bloque
 	SoundBuffer winBuffer;//buffer del sonido de ganar

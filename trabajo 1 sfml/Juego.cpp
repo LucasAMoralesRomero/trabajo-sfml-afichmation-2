@@ -128,6 +128,7 @@ void juego::gameLoop() {
 		*tiempo1 = reloj1->getElapsedTime();
 		if (tiempo1->asSeconds() > 1 / fps)
 		{
+			procesarMusica();
 			procesarColisiones();
 			procesarEventos();
 			procesarGravedad();
@@ -365,6 +366,7 @@ void juego::procesarTiempo()
 		hurryUp = true;
 
 	}
+	
 }
 
 void juego::bubbleSort(int arr[], int size) {
@@ -385,3 +387,17 @@ void juego::checkWin() {
 		win = true;
 	}
 }
+
+void juego::procesarMusica()
+{
+	if (!audio->backgroundSoundStatus() && !hurryUp)
+	{
+		audio->playBackgroundSound();
+	}
+	else if (!audio->backgroundSoundStatus() && hurryUp)
+	{
+		audio->playBackgroundSoundFaster();
+	}
+	
+}
+

@@ -20,6 +20,7 @@ public:
 	void procesarTiempo();//procesamos el tiempo
 	void bubbleSort(int arr[], int size);//algoritmo bubble sort
 	void checkWin();//chequeamos si ganamos
+	void procesarMusica();//procesamos musica de ambiente
 
 private:
 
