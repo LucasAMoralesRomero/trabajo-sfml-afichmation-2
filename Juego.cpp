@@ -356,17 +356,14 @@ void juego::procesarTiempo()
 		audio->stopBackgroundSound();
 		//ahora reporducioms el sonido de perder
 		audio->playMusicdGameOver();
-		
 	}
-	//cout << seconds << endl;
-	if (seconds == 30)//si llegamos a los 30 segundos reproducimos el hurry up y cambiamos la bandera de hurryUP
+	if (seconds == 30 && !hurryUp || seconds < 30 && !hurryUp)//si llegamos a los 30 segundos reproducimos el hurry up y cambiamos la bandera de hurryUP
 	{
 		audio->stopBackgroundSound();
 		audio->playMusicHurryUp();
 		hurryUp = true;
-
 	}
-	
+	//cout << seconds << endl;	
 }
 
 void juego::bubbleSort(int arr[], int size) {
@@ -400,4 +397,5 @@ void juego::procesarMusica()
 	}
 	
 }
+
 
